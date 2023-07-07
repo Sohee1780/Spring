@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.momo.mapper.BookMapper">
+
+	<select id="getList" resultType="com.momo.vo.BookVO">
+		select * from (
+    		select rownum rn, t.* 
+    		from (
+        		select b.no, b.title, decode(b.rentyn, 'Y', '대여중', '대여가능') rentynStr, b.author, b.sfile, b.ofile, 
+                d.id, to_char(d.rentday, 'yy/mm/dd') rentday, to_char(d.reternableday, 'yy/mm/dd') reternableday, d.reternday, d.rentno
+        		from book b, (select * from rent where 대여여부='Y') d
+        		where b.no = d.bookno(+) and 1=1 <include refid="criteria"/>  
+        		order by b.no desc
+        	)t
+    	) where rn between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from book where 1=1 <include refid="criteria"/>
+	</select>
+	
+	<select id="getOne" resultType="com.momo.vo.BookVO">
+		select * from book where no=#{no}
+	</select>
+	
+	
+	<sql id="criteria">
+		<choose>
+			<when test="searchField == 'title'">
+				and title like '%'||#{searchWord}||'%'
+			</when>
+			<when test="searchField == 'author'">
+				and author like '%'||#{searchWord}||'%'
+			</when>
+		</choose>
+	</sql>
+</mapper>
+
+

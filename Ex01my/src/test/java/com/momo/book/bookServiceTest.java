@@ -1,4 +1,4 @@
-package com.momo.board;
+package com.momo.book;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -9,34 +9,28 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.ui.Model;
 
-import com.momo.service.BoardService;
-import com.momo.vo.BoardVO;
+import com.momo.service.BookService;
+import com.momo.vo.BookVO;
 
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class BoardServiceTest {
+public class bookServiceTest {
 	
 	@Autowired
-	BoardService boardService;
+	BookService bookService;
 	
 	@Test
-	public void getListXml() {
-		//List<BoardVO> list = boardService.getListXml();
+	public void getList(Model model) {
+			
+//		List<BookVO> list = bookService.getList(cri, model);
+//		
+//		log.info(list);
 		
-		//list.forEach(board -> {
-		//	log.info(board);
-		//});
+		assertNotNull(bookService);
 	}
-	
-	@Test
-	public void getOne() {
-		int bno = 20;
-		BoardVO board = boardService.getOne(bno);
-	}
-	
-	
 }

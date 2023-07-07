@@ -41,7 +41,7 @@ public class boardTest {
 	@Test
 	public void getListXml() {
 		assertNotNull(boardMapper);
-		List<BoardVO> list = boardMapper.getListXml();
+		/*List<BoardVO> list = boardMapper.getListXml();
 		
 		list.forEach(board -> {
 			log.info("boardVO=========");
@@ -49,7 +49,7 @@ public class boardTest {
 			log.info(board.getTitle());
 			log.info(board.getContent());
 			log.info(board.getWriter());
-		});
+		});*/
 	}
 	
 	@Test

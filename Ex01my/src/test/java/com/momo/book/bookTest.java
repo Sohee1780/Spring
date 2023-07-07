@@ -1,4 +1,4 @@
-package com.momo.board;
+package com.momo.book;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -10,33 +10,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.momo.service.BoardService;
-import com.momo.vo.BoardVO;
+import com.momo.mapper.BookMapper;
+import com.momo.vo.BookVO;
+import com.momo.vo.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class BoardServiceTest {
+public class bookTest {
 	
 	@Autowired
-	BoardService boardService;
+	BookMapper bookMapper;
 	
 	@Test
-	public void getListXml() {
-		//List<BoardVO> list = boardService.getListXml();
+	public void getList() {
+		Criteria cri = new Criteria();
+		cri.setSearchField("title");
+		cri.setSearchWord("시노다");
 		
-		//list.forEach(board -> {
-		//	log.info(board);
-		//});
+		List<BookVO> list = bookMapper.getList(cri);
+		
+		log.info(list);
+		
+		assertNotNull(bookMapper);
 	}
 	
 	@Test
 	public void getOne() {
-		int bno = 20;
-		BoardVO board = boardService.getOne(bno);
+		
+		BookVO book = bookMapper.getOne(187);
+		
+		log.info("book : "+book);
 	}
-	
-	
+
 }
