@@ -39,7 +39,7 @@
 	  <!-- 상세보기 -->
 	  <div class="list-group w-auto">
 		<form method="get" name="viewForm">
-			<input type="hidden" value="${board.bno }" name="bno">
+			<input type="hidden" id="bno" value="${board.bno }" name="bno">
 			<div class="mb-3">
 			  <label for="title" class="form-label">제목</label>
 			  <input id="title" name="title" type="text" class="form-control" readonly value="${board.title }">
@@ -63,6 +63,8 @@
 	  <!-- 상세보기 끝 -->
 		
 	  </div>
+	  
+	  <%@include file="../reply/test.jsp" %>
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

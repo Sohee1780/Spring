@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.momo.mapper.ReplyMapper;
+import com.momo.vo.Criteria;
 import com.momo.vo.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
@@ -26,7 +27,12 @@ public class ReplyMapperTest {
 	@Test
 	public void test() {
 		assertNotNull(replyMapper);
-		List<ReplyVO> list = replyMapper.getList(112);
+		Criteria cri = new Criteria();
+		
+		cri.setAmount(3);
+		cri.setPageNo(1);
+		
+		List<ReplyVO> list = replyMapper.getList(110, cri);
 		
 		log.info("list : "+list);
 	}
@@ -41,5 +47,13 @@ public class ReplyMapperTest {
 		int res = replyMapper.insertReply(reply);
 		log.info("insertReply : "+res);
 		
+	}
+	
+	@Test
+	public void total() {
+		
+		int total = replyMapper.totalCount(110);
+		
+		log.info("total : "+total);
 	}
 }

@@ -4,10 +4,14 @@
 
 <mapper namespace="com.momo.mapper.ReplyMapper">
 	<select id="getList" resultType="com.momo.vo.ReplyVO">
-		select rno, bno, reply, replyer, to_char(replyDate, 'yyyy-MM-dd') replydate, updateDate
-		from tbl_reply
-		where bno = #{bno}
-		order by rno desc
+		select * from (
+    		select rownum rn, r.* 
+        	from ( select rno, bno, reply, replyer, to_char(replyDate, 'yyyy-MM-dd') replydate, updateDate
+            from tbl_reply
+            where bno = #{bno}
+            order by rno) r
+            )
+    	where rn between #{cri.startNo} and #{cri.endNo}
 	</select>
 	
 	<insert id="insertReply">
@@ -22,4 +26,8 @@
 	<update id="updateReply">
 		update tbl_reply set reply=#{reply}, updatedate=sysdate where rno=#{rno}
 	</update>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from tbl_reply where bno=#{bno}
+	</select>
 </mapper>
