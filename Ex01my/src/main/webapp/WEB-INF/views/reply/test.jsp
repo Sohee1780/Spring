@@ -194,16 +194,6 @@
 		*/
 	}
 	
-	// callback 함수의 이름을 넘겨주면 괄호를 붙이면 함수를 실행시킴
-	function fetchGet(url, callback) {
-		// url 요청
-		fetch(url)
-			// 요청결과 json문자열을 javascript 객체로 반환
-			.then(response => response.json())
-			// 콜백함수 실행
-			.then(map => callback(map))
-	}
-	
 	function fetchPost(url, obj, callback) {
 		try{
 			fetch(url, {method:'post', 
@@ -217,7 +207,22 @@
 			
 		}
 	}
-	
+
+	// callback 함수의 이름을 넘겨주면 괄호를 붙이면 함수를 실행시킴
+	function fetchGet(url, callback) {
+		try{
+			// url 요청
+			fetch(url)
+				// 요청결과 json문자열을 javascript 객체로 반환
+				.then(response => response.json())
+				// 콜백함수 실행
+				.then(map => callback(map))
+		}catch(e){
+			console.log('fetchGet', e);
+			
+		}
+	}
+
 	function replyRes(map) {
 		if(map.result=='success') {
 			// 등록성공
@@ -231,7 +236,6 @@
 		}
 		
 	}
-
 </script>
 
 </head>
@@ -239,6 +243,7 @@
 
 <h2>답글달기</h2>
 <input type="hidden" name="page" id="page" value="1">
+<input type="text" name="bno" id="bno" value="110">
 
 <div class="input-group mb-3">
   <input type="text" class="form-control" id="replyer" placeholder="작성자 입력">

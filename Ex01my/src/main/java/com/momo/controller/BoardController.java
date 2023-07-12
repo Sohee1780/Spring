@@ -87,6 +87,7 @@ public class BoardController {
 		
 		BoardVO board = boardService.getOne(paramVO.getBno());
 		
+		
 		model.addAttribute("board", board);
 		
 		return "/board/write";

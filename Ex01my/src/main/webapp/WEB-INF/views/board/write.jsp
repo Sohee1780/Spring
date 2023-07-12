@@ -57,6 +57,7 @@
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				
 				<input type="hidden" name="bno" value="${empty board.bno ? 0 : board.bno}">
+
 				<c:if test="${empty board.bno }" var="result">
 					<button type="submit" class="btn btn-primary btn-lg" onclick="request('/board/write')" >글쓰기</button>
 				</c:if>

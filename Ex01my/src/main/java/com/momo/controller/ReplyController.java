@@ -63,8 +63,7 @@ public class ReplyController {
 		
 		map.put("list", replyService.getList(bno, cri));
 		map.put("pageDto", pageDto);
-		
-		//model.addAttribute("realEnd", pageDto.getRealEnd());
+	
 		return map;
 	}
 	
@@ -79,18 +78,25 @@ public class ReplyController {
 		
 		log.info("=====================insert");
 		log.info("replyVO : "+vo);
-		
-		int res = replyService.insertReply(vo);
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(res > 0) {
-			map.put("result", "success");
-		} else {
-			map.put("result", "fail");
-			map.put("message", "댓글 등록 중 예외사항이 발생하였습니다.");
-			
-		}
 		
+		
+		try {
+			int res = replyService.insertReply(vo);
+			
+			if(res > 0) {
+				map.put("result", "success");
+			} else {
+				map.put("result", "fail");
+				map.put("message", "댓글 등록 중 예외사항이 발생하였습니다.");
+				
+			}			
+		}catch (Exception e) {
+			map.put("result","fail");
+			map.put("message", e.getMessage());
+		}
+
 		return map;
 	}
 	

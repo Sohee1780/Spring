@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://kit.fontawesome.com/580fe16cf3.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 	// 메세지 처리
 	let msg = '${msg}';
