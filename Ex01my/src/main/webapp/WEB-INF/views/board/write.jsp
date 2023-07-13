@@ -18,11 +18,21 @@
 	<link href="/resources/css/style.css" rel="stylesheet">
 
 <script type="text/javascript">
+	//history.replaceState({}, null, location.pathname);
+
 	function request(url) {
 		// 폼 이름을 확인
 		viewForm.action=url;
 		viewForm.submit();
 	}
+	
+	window.addEventListener('load', function() {
+		btnList.addEventListener('click', function() {
+			viewForm.action='/board/list';
+			viewForm.method='get';
+			viewForm.submit();
+		});
+	});
 </script>
 
 </head>
@@ -33,13 +43,19 @@
 	  <div class="bg-light p-5 rounded">
 	    <h1>게시판</h1>
 	    <p class="lead">부트스트랩을 이용한 게시판 만들기</p>
-	    <a class="btn btn-lg btn-primary" href="/board/list" role="button">리스트로 이동&raquo;</a>
+	    <a class="btn btn-lg btn-primary" href="#" id="btnList" role="button">리스트로 이동&raquo;</a>
 	  </div>
 	  <p></p>
 	  
 	  <!-- 글쓰기 -->
 	  <div class="list-group w-auto">
 		<form name="viewForm" method="post">
+		
+			<!-- 페이지, 검색유지 -->
+			<input type="text" value="${param.pageNo }" name="pageNo">
+			<input type="text" value="${param.searchField}" name="searchField">
+			<input type="text" value="${param.searchWord}" name="searchWord">
+		
 			<div class="mb-3">
 			  <label for="title" class="form-label">제목</label>
 			  <input id="title" name="title" type="text" class="form-control" value="${board.title }">

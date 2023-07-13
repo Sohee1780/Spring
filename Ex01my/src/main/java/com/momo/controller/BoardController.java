@@ -1,7 +1,5 @@
 package com.momo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,8 +76,6 @@ public class BoardController {
 	 * 수정하기
 	 * - bno 파라메터로 받아야함
 	 * - 버튼, 버튼의 액션이 달라짐
-	 * @param paramVO
-	 * @param model
 	 * @return
 	 */
 	@GetMapping("edit")
@@ -94,15 +90,27 @@ public class BoardController {
 	}
 	
 	@PostMapping("edit")
-	public String editU(BoardVO paramVO, RedirectAttributes rttr,  Model model) {
+	public String editU(BoardVO paramVO, RedirectAttributes rttr, Model model, Criteria cri) {
 		
+		log.info("************************************");
 		int res = boardService.update(paramVO);
+		log.info("cri : "+cri);
+		log.info("************************************");
 		
+		// ?pageNo=1 -> request.getParam("pageNo"); 파라메터로 넘어오는거 받음 ${param.pageNo}
+		// request.setAttribute("pageNo") request 내장객체에 저장하면 -> request.getAttribute("pageNo")로 받음 session.setAttribute()도
+		// ${pageNo}로 이름으로 불러올 수 있음
 		String msg = "";
 		if(res > 0) {
+			// addFlashAttribute 는 세션에 저장됨 세션에 잠깐 저장됐다가 지워짐
+			// redirect시 request영역이 공유되지 않으므로  RedirectAttributes 를 이용
 			msg = "수정 되었습니다.";
 			rttr.addFlashAttribute("msg", msg);
-			// redirect시 request영역이 공유되지 않으므로  RedirectAttributes 를 이용
+			
+			// 파라메터로 넘겨줌
+			rttr.addAttribute("pageNo", cri.getPageNo());
+			rttr.addAttribute("searchField", cri.getSearchField());
+			rttr.addAttribute("searchWord", cri.getSearchWord());
 			return "redirect:/board/view?bno="+paramVO.getBno();
 		}else {
 			msg = "수정 중 오류가 발생 하였습니다.";

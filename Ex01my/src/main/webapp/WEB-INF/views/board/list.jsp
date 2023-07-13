@@ -19,6 +19,8 @@
 	<link href="/resources/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript">
+	
+		history.replaceState({}, null, `http://localhost:8080/board/view?pageNo=${param.pageNo }&bno=${board.bno }&searchField=${param.searchField }title&searchWord=${param.searchWord }`);	
 		function request(url, bno) {
 			searchForm.action=url;
 			searchForm.bno.value=bno;
@@ -40,6 +42,7 @@
 
   <%@ include file="../common/searchForm.jsp" %>
   
+  ${userId }
   <!-- 게시판 시작 -->
   <div class="list-group w-auto">
   

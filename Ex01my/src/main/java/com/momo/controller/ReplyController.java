@@ -1,11 +1,9 @@
 package com.momo.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +25,11 @@ import lombok.extern.log4j.Log4j;
  */
 @RestController
 @Log4j
-public class ReplyController {
+public class ReplyController extends CommonRestController{
 	
 	@Autowired
 	ReplyService replyService;
-	
+		
 	@GetMapping("/test")
 	public String test() {
 		return "test";
@@ -50,9 +48,7 @@ public class ReplyController {
 								@PathVariable("page") int page) {
 		log.info("bno : "+bno);
 		log.info("page : "+page);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		// 페이지 처리(시작번호~끝번호)
 		Criteria cri = new Criteria();
 		cri.setPageNo(page);
@@ -61,10 +57,7 @@ public class ReplyController {
 		int total = replyService.totalCount(bno);
 		PageDto pageDto = new PageDto(cri, total);
 		
-		map.put("list", replyService.getList(bno, cri));
-		map.put("pageDto", pageDto);
-	
-		return map;
+		return responseListMap(replyService.getList(bno, cri), pageDto);
 	}
 	
 	/**
@@ -79,25 +72,7 @@ public class ReplyController {
 		log.info("=====================insert");
 		log.info("replyVO : "+vo);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		
-		try {
-			int res = replyService.insertReply(vo);
-			
-			if(res > 0) {
-				map.put("result", "success");
-			} else {
-				map.put("result", "fail");
-				map.put("message", "댓글 등록 중 예외사항이 발생하였습니다.");
-				
-			}			
-		}catch (Exception e) {
-			map.put("result","fail");
-			map.put("message", e.getMessage());
-		}
-
-		return map;
+		return responseWriteMap(replyService.insertReply(vo));
 	}
 	
 	@GetMapping("/reply/delete/{rno}")
@@ -105,17 +80,7 @@ public class ReplyController {
 		log.info("=====================delete");
 		log.info("rno : "+rno);
 		
-		int res = replyService.deleteReply(rno);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(res > 0) {
-			map.put("result", "success");
-		}else {
-			map.put("result", "fail");
-			map.put("message", "댓글 삭제 중 예외사항이 발생하였습니다.");
-		}
-		
-		return map;
+		return responseDeleteMap(replyService.deleteReply(rno));
 	}
 	
 	@PostMapping("/reply/update")
@@ -123,16 +88,8 @@ public class ReplyController {
 		log.info("=====================update");
 		log.info("rno : "+vo.getRno());
 		
-		int res = replyService.updateReply(vo);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(res > 0) {
-			map.put("result", "success");
-		}else {
-			map.put("result", "fail");
-			map.put("message", "댓글 수정 중 예외사항이 발생하였습니다.");
-		}
-		
-		return map;
+		return responseEditMap(replyService.updateReply(vo));
 	}
+	
+
 }

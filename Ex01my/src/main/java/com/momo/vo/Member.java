@@ -22,7 +22,11 @@ public class Member {
 	private String id;
 	private String pw;
 	private String name;
+	private String adminyn;
+	private String status;
+	private String grade;
 	private int age;
+	
 	
 	
 	@DateTimeFormat(pattern = "yyyy/MM/dd")

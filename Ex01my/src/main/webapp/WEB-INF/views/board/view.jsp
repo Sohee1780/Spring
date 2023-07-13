@@ -24,7 +24,8 @@
 <%@ include file="../common/header.jsp" %>
 	
 <script type="text/javascript">	
-
+	
+	
 	window.addEventListener('load', function(){
 	// window.onload는 하나만 적용됨
 	// window.onload = function(){		
@@ -74,14 +75,16 @@
 	  </div>
 	  <p></p>
 	  <!-- 상세보기 -->
+	 
+	 
 	  <div class="list-group w-auto">
 		<form method="get" name="viewForm">
 			
 			<!-- 파라메터 -->
 			<input type="text" id="bno" value="${board.bno }" name="bno">
 			<input type="text" id="pageNo" value="${param.pageNo }" name="pageNo">
-			<input type="text" id="searchField" value="${param.searchField}" name="searchField">
-			<input type="text" id="searchWord" value="${param.searchWord}" name="searchWord">
+			<input type="text" id="searchField" value="${param.searchField }" name="searchField">
+			<input type="text" id="searchWord" value="${param.searchWord }" name="searchWord">
 			
 			<div class="mb-3">
 			  <label for="title" class="form-label">제목</label>
