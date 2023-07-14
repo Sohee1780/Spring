@@ -6,4 +6,8 @@ public interface MemberMapper {
 
 	public Member login(Member member);
 	
+	public int singupMember(Member member);
+	
+	public int idCheck(Member member);
+	
 }

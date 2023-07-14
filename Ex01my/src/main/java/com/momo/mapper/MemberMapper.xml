@@ -5,7 +5,15 @@
 <mapper namespace="com.momo.mapper.MemberMapper">
 
 	<select id="login" resultType="com.momo.vo.Member">
-		select id, name, adminyn, status, grade from member where id=#{id} and pw=#{pw}
+		select * from member where id=#{id}
 	</select>
 
+	<insert id="singupMember">
+		insert into member (id, name, pw) values(#{id}, #{name}, #{pw})
+	</insert>
+	
+	<select id="idCheck" resultType="int">
+		<!-- 조회한 count(*)가 0이면 1 아니면 0으로 -->
+		select count(*) from member where id=#{id}
+	</select>
 </mapper>

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,6 +23,8 @@ public class MemberTest {
 	@Autowired
 	MemberService memberService;
 	
+
+	
 	@Test
 	public void loginTest() {
 		
@@ -34,5 +37,15 @@ public class MemberTest {
 		
 		assertEquals(member.getId(), m.getId());
 		log.info("로그인 : "+memberService.login(member));
+	}
+	
+	@Test
+	public void singupTest() {
+		
+		Member member = new Member();
+		member.setId("SS");
+				
+		assertEquals(1, memberService.idCheck(member));
+			
 	}
 }

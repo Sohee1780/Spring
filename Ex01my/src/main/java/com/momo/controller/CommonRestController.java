@@ -15,6 +15,8 @@ public class CommonRestController {
 	private final String REST_DELETE = "삭제";
 	private final String REST_LIST = "조회";
 	private final String REST_LOGIN = "로그인";
+	protected final String REST_SUCCESS= "success";
+	protected final String REST_FAIL = "fail";
 	
 	/**
 	 * 입력, 수정, 삭제의 경우  int값을 반환
@@ -24,11 +26,11 @@ public class CommonRestController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(res > 0) {
-			map.put("result", "success");
+			map.put("result", REST_SUCCESS);
 			map.put("message", msg+"되었습니다.");
 
 		} else {
-			map.put("result", "fail");
+			map.put("result", REST_FAIL);
 			map.put("message", msg+"중 예외가 발생하였습니다.");
 		}
 		
@@ -60,6 +62,16 @@ public class CommonRestController {
 		
 		int res = member != null ? 1 : 0;
 		Map<String, Object> map = responseMap(res, REST_LOGIN);
+		
+		return map;
+	}
+	
+	public Map<String, Object> responseMapMessage(String result, String msg){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("result", result);
+		map.put("message", msg);			
 		
 		return map;
 	}

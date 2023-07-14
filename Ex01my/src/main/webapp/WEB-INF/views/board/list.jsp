@@ -20,7 +20,7 @@
 
 	<script type="text/javascript">
 	
-		history.replaceState({}, null, `http://localhost:8080/board/view?pageNo=${param.pageNo }&bno=${board.bno }&searchField=${param.searchField }title&searchWord=${param.searchWord }`);	
+		//history.replaceState({}, null, `http://localhost:8080/board/view?pageNo=${param.pageNo }&bno=${board.bno }&searchField=${param.searchField }title&searchWord=${param.searchWord }`);	
 		function request(url, bno) {
 			searchForm.action=url;
 			searchForm.bno.value=bno;
@@ -42,7 +42,7 @@
 
   <%@ include file="../common/searchForm.jsp" %>
   
-  ${userId }
+  <div id="msg">${userId }님 환영합니다.</div>
   <!-- 게시판 시작 -->
   <div class="list-group w-auto">
   
