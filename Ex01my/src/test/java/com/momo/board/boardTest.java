@@ -116,4 +116,11 @@ public class boardTest {
 		
 		assertEquals(totalCnt, 18);
 	}
+	
+	@Test
+	public void updateReplyCnt() {
+		int res = boardMapper.updateReplyCnt(121, 1);
+		
+		assertEquals(1, res);
+	}
 }

@@ -16,4 +16,8 @@
 		<!-- 조회한 count(*)가 0이면 1 아니면 0으로 -->
 		select count(*) from member where id=#{id}
 	</select>
+	
+	<select id="getMemberRole" resultType="String">
+		select role_id from memberrole where id=#{id}
+	</select>
 </mapper>

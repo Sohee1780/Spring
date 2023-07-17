@@ -93,4 +93,11 @@ public class BoardServiceImpl implements BoardService {
 		return 0;
 	}
 
+	// 게시물 테이블의 댓글count를 + or -
+	@Override
+	public int updateReplyCnt(int bno, int amount) {
+		// TODO Auto-generated method stub
+		return boardMapper.updateReplyCnt(bno, amount);
+	}
+
 }

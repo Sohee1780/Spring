@@ -268,7 +268,7 @@
 			
 			if(map.result == 'success') {
 				// 로그인 성공 -> list로 이동
-				location.href='/board/list?msg='+map.message;
+				location.href=map.url;
 			} else {
 				// 실패 -> 메세지 처리
 				msg.innerHTML = map.message;
@@ -317,7 +317,7 @@
 	        <input type="checkbox" value="remember-me"> Remember me
 	      </label>
 	    </div>
-	    <div id="msg"></div>
+	    <div id="msg">${param.msg}</div>
 	    <button class="w-100 btn btn-lg btn-primary" type="submit" id="btnLogin">로그인</button>
 		<p></p>
 	  </form>

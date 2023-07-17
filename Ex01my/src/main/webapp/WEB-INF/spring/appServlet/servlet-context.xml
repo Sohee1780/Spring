@@ -21,8 +21,25 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.momo" />
+	<context:component-scan base-package="com.momo.controller" />
+	<context:component-scan base-package="com.momo.interceptor"></context:component-scan>
 	
-	
+	<interceptors>
+		<!-- 여러개 등록 가능 -->
+		<!-- 로그인 체크 -->
+		<interceptor>
+			<mapping path="/board/*"/>
+			<exclude-mapping path=""/>
+			<!-- 빈이름줄땐 소문자로 줘야함! 그러면 알아서 매칭해줌 -->
+			<beans:ref bean="loginInterceptor"/> <!-- 인터셉터의 클래스 경로를 지정 -->
+		</interceptor>
+		
+		<!-- 관리자 체크 -->
+		<interceptor>
+			<mapping path="/admin**"/>
+			<exclude-mapping path=""/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

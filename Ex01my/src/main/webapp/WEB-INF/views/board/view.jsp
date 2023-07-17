@@ -116,7 +116,7 @@
 	  </div>
 
 	  <!-- 댓글 작성 -->
-	  <input type="text" id="replyer" value="작성자ID">
+	  <input type="text" id="replyer" value="${userId }">
 	  <div class="input-group">
 	  	<span class="input-group-text">댓글작성</span>
 	  	<input type="text" id="reply" aria-label="First name" class="form-control">

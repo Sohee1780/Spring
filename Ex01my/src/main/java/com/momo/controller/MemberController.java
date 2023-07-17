@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.momo.service.MemberServiceImpl;
+import com.momo.service.MemberService;
 import com.momo.vo.Member;
 
 import lombok.extern.log4j.Log4j;
@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 public class MemberController extends CommonRestController{
 	
 	@Autowired
-	MemberServiceImpl mService;
+	MemberService mService;
 
 	/**
 	 * 로그인 페이지로 이동
@@ -53,8 +53,14 @@ public class MemberController extends CommonRestController{
 		if(member != null) {
 			session.setAttribute("member", member);
 			session.setAttribute("userId", member.getId());
+			Map<String,Object> map = responseMapMessage(REST_SUCCESS, "로그인 되었습니다.");
+			if(member.getRole() != null && member.getRole().contains("ADMIN_ROLE")) {
+				map.put("url", "/admin");
+			} else {
+				map.put("url", "/board/list");
+			}
 			
-			return responseMapMessage(REST_SUCCESS, "로그인 되었습니다.");
+			return map;
 		} else {
 			return responseMapMessage(REST_FAIL, "아이디/비밀번호를 확인해주세요.");
 		}
