@@ -29,7 +29,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 			}
 		}
 		
-		// 로그인 페이지로 이동할 수 있도록
+		// 로그인 페이지로 이동할 수 있도록(한글일경우 처리해줘야함)
 		String msg = URLEncoder.encode("로그인 후 사용 가능한 메뉴입니다.", "utf-8");
 		response.sendRedirect("/login?msg="+msg);
 		return false;

@@ -65,6 +65,7 @@ public class LogAdvice {
 	 *  
 	 *  주 업무로직을 실행하기 위해 JoinPoint의 하위 클래스인 
 	 *  ProceedingJoinPoint타입의 파라미터를 필수적으로 선언해야 함
+	 *  타겟메서드의 실행결과를 반환하기 위해서
 	 * @return
 	 */
 	@Around("execution(* com.momo.service.Board*.*(..))")
