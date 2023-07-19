@@ -26,7 +26,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @Log4j
-public class FileUploadController {
+public class FileUploadController extends CommonRestController{
 	
 	@Autowired
 	FileUploadService service;
@@ -51,14 +51,72 @@ public class FileUploadController {
 	public String fileAction(List<MultipartFile> files, int bno, RedirectAttributes rttr) {
 		log.info("fileupload");
 		
-		// 인서트 결과를 담을 변수
-		int insertRes = 0;
+		
 		
 //		files.forEach(file -> {
 //			log.info("oFileName : "+file.getOriginalFilename());
 //			log.info("name : "+file.getName());
 //			log.info("size : "+file.getSize());
 //		});
+		
+		int res = fileupload(files, bno);
+		String msg = res+"건 저장 되었습니다.";
+		rttr.addAttribute("msg", msg);
+		
+		return "redirect:/file/fileupload";
+	}
+	
+	@PostMapping("/file/fileuploadActionFetch")
+	public @ResponseBody Map<String, Object> fileActionFetch(List<MultipartFile> files, int bno) {
+		log.info("fileuploadFecth");
+		
+		int res = fileupload(files, bno);
+		log.info("업로드건수 : "+res);
+		return responseMapMessage("success", res+"건 저장 되었습니다.");
+	}
+	
+	@GetMapping("/file/list/{bno}")
+	public @ResponseBody Map<String, Object> fileuploadList(@PathVariable("bno") int bno) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", service.getList(bno));
+		
+		log.info("***********************");
+		log.info(map);
+		log.info("***********************");
+		
+		
+		return map;
+	}
+	
+	// 중복 방지용
+	// 업로드 날짜를 폴더 이름으로 사용(파일관리에도 유용)
+	// 2023/07/18
+	public String getFolder() {
+		LocalDate currentDate = LocalDate.now();
+		log.info("currentDate : "+currentDate);
+		log.info("경로 : "+currentDate.toString().replace("-", File.separator));
+		
+		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
+		
+		// 폴더가 없으면 폴더를 생성
+		File saveDir = new File(ATTACHES_DIR+uploadPath);
+		if(!saveDir.exists()) {
+			if(saveDir.mkdirs()) {
+				log.info("폴더생성!");
+			}else {
+				log.info("폴더생성 실패");
+			}
+		}
+		
+		
+		return uploadPath;
+	}
+	
+	
+	public int fileupload(List<MultipartFile> files, int bno) {
+		// 인서트 결과를 담을 변수
+		int insertRes = 0;
+		
 		for(MultipartFile file : files) {
 
 			// 선택된 파일이 없는 경우 다음파일로 이동
@@ -128,47 +186,6 @@ public class FileUploadController {
 				e.printStackTrace();
 			}
 		}
-		
-		String msg = insertRes+"건 저장 되었습니다.";
-		rttr.addAttribute("msg", msg);
-		
-		return "redirect:/file/fileupload";
-	}
-	
-	@GetMapping("/file/list/{bno}")
-	public @ResponseBody Map<String, Object> fileuploadList(@PathVariable("bno") int bno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", service.getList(bno));
-		
-		log.info("***********************");
-		log.info(map);
-		log.info("***********************");
-		
-		
-		return map;
-	}
-	
-	// 중복 방지용
-	// 업로드 날짜를 폴더 이름으로 사용(파일관리에도 유용)
-	// 2023/07/18
-	public String getFolder() {
-		LocalDate currentDate = LocalDate.now();
-		log.info("currentDate : "+currentDate);
-		log.info("경로 : "+currentDate.toString().replace("-", File.separator));
-		
-		String uploadPath = currentDate.toString().replace("-", File.separator)+File.separator;
-		
-		// 폴더가 없으면 폴더를 생성
-		File saveDir = new File(ATTACHES_DIR+uploadPath);
-		if(!saveDir.exists()) {
-			if(saveDir.mkdirs()) {
-				log.info("폴더생성!");
-			}else {
-				log.info("폴더생성 실패");
-			}
-		}
-		
-		
-		return uploadPath;
+		return insertRes;
 	}
 }
